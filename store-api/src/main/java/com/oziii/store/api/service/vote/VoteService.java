@@ -1,8 +1,10 @@
 package com.oziii.store.api.service.vote;
 
+import com.oziii.store.api.dto.vote.PerformVoteRequest;
 import com.oziii.store.api.dto.vote.VoteRequest;
 import com.oziii.store.api.dto.vote.VoteResponse;
 import com.oziii.store.domain.vote.Vote;
+import com.oziii.store.jpa.repository.vote.VoteCountRepository;
 import com.oziii.store.jpa.repository.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import java.util.stream.Collectors;
 public class VoteService {
 
     private final VoteRepository voteRepository;
+    private final VoteCountRepository voteCountRepository;
 
     public VoteResponse createVote(VoteRequest voteRequest) {
         Vote vote = voteRepository.save(voteRequest.toDomain());
@@ -34,5 +37,11 @@ public class VoteService {
         List<Vote> votes = voteRepository.findAll();
         return votes.stream()
                 .map(VoteResponse::fromDomain).collect(Collectors.toList());
+    }
+
+    public void performVote(PerformVoteRequest performVoteRequest) {
+        Vote vote = voteRepository.findById(performVoteRequest.voteId());
+        vote.verifyVote();
+        voteCountRepository.save(performVoteRequest.toDomain());
     }
 }

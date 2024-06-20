@@ -56,6 +56,7 @@ public class VoteController {
      */
     @PostMapping()
     public ResponseEntity performVote(@RequestBody PerformVoteRequest performVoteRequest) {
+        voteFacade.performVote(performVoteRequest);
         return ResponseEntity.ok().build();
     }
 

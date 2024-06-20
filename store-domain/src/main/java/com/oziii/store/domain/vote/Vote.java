@@ -23,4 +23,10 @@ public class Vote {
         this.isEnabled = isEnabled;
         this.voteItems = voteItems;
     }
+
+    public void verifyVote() {
+        if (!isEnabled) {
+            throw new IllegalArgumentException("비활성 투표입니다. 참여하실 수 없습니다.");
+        }
+    }
 }

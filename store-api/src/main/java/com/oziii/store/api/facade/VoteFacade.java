@@ -1,5 +1,6 @@
 package com.oziii.store.api.facade;
 
+import com.oziii.store.api.dto.vote.PerformVoteRequest;
 import com.oziii.store.api.dto.vote.VoteRequest;
 import com.oziii.store.api.dto.vote.VoteResponse;
 import com.oziii.store.api.service.vote.VoteService;
@@ -30,4 +31,7 @@ public class VoteFacade {
         return voteService.getVotes();
     }
 
+    public void performVote(PerformVoteRequest performVoteRequest) {
+        voteService.performVote(performVoteRequest);
+    }
 }
