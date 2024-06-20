@@ -1,4 +1,4 @@
-package com.oziii.store.api.vote.dto;
+package com.oziii.store.api.dto.vote;
 
 public record PerformVoteRequest(
         Long voteId,
