@@ -1,9 +1,9 @@
-package com.oziii.store.api.vote.controller;
+package com.oziii.store.api.controller;
 
-import com.oziii.store.api.vote.dto.PerformVoteRequest;
-import com.oziii.store.api.vote.dto.VoteRequest;
-import com.oziii.store.api.vote.dto.VoteResponse;
-import com.oziii.store.api.vote.facade.VoteFacade;
+import com.oziii.store.api.dto.vote.PerformVoteRequest;
+import com.oziii.store.api.dto.vote.VoteRequest;
+import com.oziii.store.api.dto.vote.VoteResponse;
+import com.oziii.store.api.facade.VoteFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +23,15 @@ public class VoteController {
 
     @PostMapping("/save")
     public ResponseEntity<VoteResponse> createVote(@RequestBody VoteRequest voteRequest) {
-        return null;
+        return ResponseEntity.ok(voteFacade.createVote(voteRequest));
     }
 
     /**
      * 투표 삭제
      */
-    @PutMapping("/delete")
-    public ResponseEntity deleteVote(@RequestParam Long voteId) {
+    @DeleteMapping("/{voteId}")
+    public ResponseEntity deleteVote(@PathVariable Long voteId) {
+        voteFacade.deleteVote(voteId);
         return ResponseEntity.ok().build();
     }
 
@@ -39,7 +40,7 @@ public class VoteController {
      */
     @GetMapping("/{voteId}")
     public ResponseEntity<VoteResponse> getVoteByVoteId(@PathVariable Long voteId) {
-        return null;
+        return ResponseEntity.ok(voteFacade.getVoteById(voteId));
     }
 
     /**
@@ -47,7 +48,7 @@ public class VoteController {
      */
     @GetMapping("/all")
     public ResponseEntity<List<VoteResponse>> getVotes() {
-        return null;
+        return ResponseEntity.ok(voteFacade.getVotes());
     }
 
     /**
@@ -55,6 +56,7 @@ public class VoteController {
      */
     @PostMapping()
     public ResponseEntity performVote(@RequestBody PerformVoteRequest performVoteRequest) {
+        voteFacade.performVote(performVoteRequest);
         return ResponseEntity.ok().build();
     }
 
