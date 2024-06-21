@@ -17,6 +17,9 @@ public class VoteCountRepository {
     private final VoteCountJpaRepository voteCountJpaRepository;
 
     public void save(VoteCount voteCount) {
+        voteCountJpaRepository.save(VoteCountMapper.toJpaEntity(voteCount));
+    }
+    public void updateCount(VoteCount voteCount) {
         /**
          * 별도의 @Lock 명시가 없으면 default 타입으로 Optimistic 적용
          */

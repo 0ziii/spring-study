@@ -39,7 +39,7 @@ public class VoteRepository {
     }
 
     public List<Vote> findAll() {
-        List<VoteJpaEntity> voteJpaEntities = voteJpaRepository.findAllByEnabled(TRUE);
+        List<VoteJpaEntity> voteJpaEntities = voteJpaRepository.findAllByIsEnabled(TRUE);
         return voteJpaEntities.stream()
                 .map(VoteMapper::toDomain).collect(Collectors.toList());
     }

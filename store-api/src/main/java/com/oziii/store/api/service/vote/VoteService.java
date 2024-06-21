@@ -1,9 +1,12 @@
 package com.oziii.store.api.service.vote;
 
 import com.oziii.store.api.dto.vote.PerformVoteRequest;
+import com.oziii.store.api.dto.vote.VoteItemRequest;
 import com.oziii.store.api.dto.vote.VoteRequest;
 import com.oziii.store.api.dto.vote.VoteResponse;
 import com.oziii.store.domain.vote.Vote;
+import com.oziii.store.domain.vote.VoteCount;
+import com.oziii.store.domain.vote.VoteItem;
 import com.oziii.store.jpa.repository.vote.VoteCountRepository;
 import com.oziii.store.jpa.repository.vote.VoteRepository;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +24,9 @@ public class VoteService {
 
     public VoteResponse createVote(VoteRequest voteRequest) {
         Vote vote = voteRepository.save(voteRequest.toDomain());
+        for (VoteItem voteItem : vote.getVoteItems()) {
+            voteCountRepository.save(new VoteCount(vote.getVoteId(), voteItem.getVoteItemId()));
+        }
         return VoteResponse.fromDomain(vote);
     }
 
@@ -42,6 +48,6 @@ public class VoteService {
     public void performVote(PerformVoteRequest performVoteRequest) {
         Vote vote = voteRepository.findById(performVoteRequest.voteId());
         vote.verifyVote();
-        voteCountRepository.save(performVoteRequest.toDomain());
+        voteCountRepository.updateCount(performVoteRequest.toDomain());
     }
 }

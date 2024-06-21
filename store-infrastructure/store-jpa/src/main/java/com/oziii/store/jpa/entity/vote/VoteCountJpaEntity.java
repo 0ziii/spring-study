@@ -21,6 +21,10 @@ public class VoteCountJpaEntity {
     @Column(name = "version")
     private int version;
 
+    public VoteCountJpaEntity(VoteCountId voteCountId) {
+        this.voteCountId = voteCountId;
+        this.count = 0;
+    }
     public void increaseCount() {
         this.count++;
     }

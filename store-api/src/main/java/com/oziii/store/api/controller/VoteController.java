@@ -29,8 +29,8 @@ public class VoteController {
     /**
      * 투표 삭제
      */
-    @PutMapping("/delete")
-    public ResponseEntity deleteVote(@RequestParam Long voteId) {
+    @DeleteMapping("/{voteId}")
+    public ResponseEntity deleteVote(@PathVariable Long voteId) {
         voteFacade.deleteVote(voteId);
         return ResponseEntity.ok().build();
     }
